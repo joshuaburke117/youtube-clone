@@ -8,6 +8,7 @@ import { onAuthStateChangedHelper } from "../firebase/firebase";
 import { useEffect, useState } from "react";
 import { unsubscribe } from "diagnostics_channel";
 import {User} from 'firebase/auth';
+import Upload from "./upload";
 //closure 
 
 
@@ -30,7 +31,7 @@ export default function Navbar(){
                     src="/youtube-logo.svg" alt="Youtube Logo"/>
             </Link>
             {
-                //TODO: add a upload button
+                user && <Upload/>
             }
             <SignIn user={user}/>
         </nav>
