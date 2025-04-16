@@ -8,6 +8,7 @@ import {
   convertVideo,
   setupDirectories
 } from './storage';
+import { isVideoNew, setVideo } from './firestore';
 
 // Create the local directories for videos
 setupDirectories();
@@ -33,11 +34,20 @@ app.post('/process-video', async (req, res) => {
 
   const inputFileName = data.name;
   const outputFileName = `processed-${inputFileName}`;
+  const videoId = inputFileName.split('.')[0];
 
-  // Download the raw video from Cloud Storage
-  console.log('attempting to download video');
+  if (!isVideoNew(videoId)){
+    return res.status(400).send('Bad request: video already processing or processed');
+  }else{
+    await setVideo(videoId, {
+      id: videoId,
+      uid: videoId.split('-')[0],
+      status: 'processing'
+    })
+  }
+
   await downloadRawVideo(inputFileName);
-  console.log('downloaded raw video');
+
   // Process the video into 360p
   try { 
     await convertVideo(inputFileName, outputFileName)
@@ -51,6 +61,12 @@ app.post('/process-video', async (req, res) => {
   
   // Upload the processed video to Cloud Storage
   await uploadProcessedVideo(outputFileName);
+
+
+  await setVideo(videoId,{
+    status: 'processed',
+    filename: outputFileName
+  })
 
   await Promise.all([
     deleteRawVideo(inputFileName),
