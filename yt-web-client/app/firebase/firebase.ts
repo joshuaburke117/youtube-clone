@@ -5,6 +5,7 @@ import { getAuth,
 GoogleAuthProvider,
 onAuthStateChanged,
 User } from "firebase/auth";
+import { getFunctions } from "firebase/functions";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCYsViexYJdQrdspEJiu5MZk4J6cvUkkYo",
@@ -17,6 +18,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+
+export const functions = getFunctions();
 
 
 /**
