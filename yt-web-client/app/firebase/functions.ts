@@ -15,10 +15,16 @@ export interface Video {
     description?: string
 }
 
+type UploadUrlResponse = {
+    data: {
+      url: string;
+    };
+  };
+
 export async function uploadVideo (file: File){
-    const response: any = await generateUploadUrl({
+    const response = await generateUploadUrl({
         fileExtension: file.name.split('.').pop()
-    });
+    })as UploadUrlResponse;
 
     //Upload the file via the signed url
     await fetch(response?.data?.url, {

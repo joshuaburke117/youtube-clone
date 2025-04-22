@@ -6,7 +6,6 @@ import styles from "./navbar.module.css"
 import SignIn from "./sign-in";
 import { onAuthStateChangedHelper } from "../firebase/firebase";
 import { useEffect, useState } from "react";
-import { unsubscribe } from "diagnostics_channel";
 import {User} from 'firebase/auth';
 import Upload from "./upload";
 //closure 

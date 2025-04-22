@@ -4,7 +4,6 @@ import { Fragment } from "react";
 import { uploadVideo } from "../firebase/functions";
 
 import styles from "./upload.module.css";
-import { eventNames } from "process";
 
 export default function upload(){
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>)=>{
